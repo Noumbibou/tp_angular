@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   //imports: [RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
-  standalone : true
+  imports: [RouterLink, RouterOutlet],
+  standalone: true,
 })
 export class App {
-  email : String = "booood@gmail.com";
+  email: String = 'booood@gmail.com';
 }
