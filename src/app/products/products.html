@@ -9,16 +9,29 @@
           <th>Selected</th>
         </tr>
       </thead>
-      <tbody>
-        @for (p of products; track p){
-          <tr>
-            <td>{{p.id}}</td>
-            <td>{{p.name}}</td>
-            <td>{{p.price}}</td>
-            <td>{{p.selected}}</td>
-          </tr>
-        }
-      </tbody>
+      @if (products){
+        <tbody>
+          @for (p of products; track p){
+            <tr>
+              <td>{{p.id}}</td>
+              <td>{{p.name}}</td>
+              <td>{{p.price}}</td>
+              <td>
+                @if (p.selected){
+                  <i class="bi bi-check-circle"></i>
+                } @else {
+                  <i class="bi bi-circle"></i>
+                }
+              </td>
+              <td>
+                <button (click)="handlerDelete(p)" class="btn btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      }
     </table>
   </div>
 </div>
