@@ -1,21 +1,19 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Service()
+@Injectable({ providedIn: 'root' })
+
 export class Product {
-  products = [
-    { id: 1, name: 'computer', price: 2500, selected: true },
-    { id: 2, name: 'printer', price: 1200, selected: false },
-    { id: 3, name: 'smart phone', price: 1300, selected: true },
-  ];
 
-  constructor() {
+  constructor(private  http : HttpClient) {
   }
 
-  getAllProducts(){
-    return this.products;
+  getAllProducts(): Observable<any>{
+    return this.http.get("http://localhost:8083/products");
   }
 
   deleteProduct(product : any){
-    this.products = this.products.filter((p) => p.id != product.id);
+    return this.http.delete("http://localhost:8083/products/"+ product.id);
   }
 }

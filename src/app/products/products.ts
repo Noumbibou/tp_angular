@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Product } from '../services/product';
 
 @Component({
@@ -9,24 +9,36 @@ import { Product } from '../services/product';
   standalone: true,
 })
 export class Products implements OnInit {
-  products! : Array<any>;
-
-  constructor(private productService : Product) {
-  }
+  products = signal<any[]>([]);
+  constructor(private productService: Product) {}
 
   ngOnInit() {
     this.getAllProducts();
   }
 
-  getAllProducts() : void {
-  this.products = this.productService.getAllProducts();
-}
+  getAllProducts(): void {
+    this.productService.getAllProducts().subscribe({
+      next: (response) => {
+        this.products.set(response);
+        console.log('reçu', response);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   protected handlerDelete(product: any) {
     let v = confirm('etes vous sure de vouloir supprimer ?');
     if (v) {
-      this.productService.deleteProduct(product);
-      this.getAllProducts();
+      this.productService.deleteProduct(product).subscribe({
+        next: (value) => {
+          this.getAllProducts();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     }
   }
 }

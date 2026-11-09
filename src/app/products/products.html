@@ -9,9 +9,9 @@
           <th>Selected</th>
         </tr>
       </thead>
-      @if (products){
+      @if (products()){
         <tbody>
-          @for (p of products; track p){
+          @for (p of products(); track p){
             <tr>
               <td>{{p.id}}</td>
               <td>{{p.name}}</td>
